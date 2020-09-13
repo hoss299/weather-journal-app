@@ -1,6 +1,6 @@
 /* Global Variables */
 let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-let apiKey = '&appid=ef2bf1ac6ebad97cd25a14e06fec507a';
+const apiKey = '&appid=ef2bf1ac6ebad97cd25a14e06fec507a';
 
 
 // Create a new date instance dynamically with JS
@@ -63,11 +63,17 @@ function doTheWork (e) {
   const zip = document.getElementById('zip').value;
   // console.log(zip);
   // console.log(feelings);
-  getData(`${baseURL}${zip}${apiKey}`)
-  .then((data) => {
-    postData('/addEntry', {temperature:data.main.temp, date:newDate , userResponse:feelings} );
-    updateUI();
-  })
+  if (zip == ""){
+    console.log('please enter your zip code')
+  } else {
+    getData(`${baseURL}${zip}${apiKey}`)
+    .then((data) => {   
+      postData('/addEntry', {temperature:data.main.temp, date:newDate , userResponse:feelings} );
+      updateUI();
+         
+    })
+  }
+  
    
 }
 
@@ -83,6 +89,7 @@ const updateUI = async () => {
 
   }catch(error){
     console.log("error", error);
+
   } 
 }
 
